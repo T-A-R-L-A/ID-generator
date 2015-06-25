@@ -1,5 +1,7 @@
-# ID atama
-# alan seçme işlemi
+# ID-router project
+# # alan seçme işlemi
+# Stajyer-Çalışan seçimi
+# with Switch Statement
 puts "Please select your subproject: "
 subprojects = ['Management','Beam Physics','Control','Electric','Electronics','IT','Mechanical Systems','RF','Vacuum','Radiation Safety']
 i = 1
@@ -9,29 +11,49 @@ subprojects.each do |value|
 end
 selection1 = gets.chomp
 
-if selection1 == '1'
+case selection1
+when '1'
   $id1 = '01'
-elsif selection1 == '2'
+when '2'
   $id1 = '02'
-elsif selection1 == '3'
+when '3'
   $id1 = '03'
-elsif selection1 == '4'
+when '4'
   $id1 = '04'
-elsif selection1 == '5'
+when '5'
   $id1 = '05'
-elsif selection1 == '6'
+when '6'
   $id1 = '06'
-elsif selection1 == '7'
+when '7'
   $id1 = '07'
-elsif selection1 == '8'
+when '8'
   $id1 = '08'
-elsif selection1 == '9'
+when '9'
   $id1 = '09'
-elsif selection1 == '10'
+when '10'
   $id1 = '10'
-else
-  puts "Your choice is wrong!"
-  $id1 = 'No!'
 end
 
-puts "Your ID: #$id1"
+#puts "Your ID: #$id1"
+
+puts "Are you employee or intern?"
+print " 1-Employee\n 2-Intern\n"
+
+selection2 = gets.chomp
+
+count1 = 101
+count2 = 999
+
+case selection2
+when '1'
+  $id2 = count1
+  count1++
+when '2'
+  $id2 = 999
+  count2--
+end
+
+$id = $id1.to_i + $id2
+
+
+puts "Your ID: #$id"
