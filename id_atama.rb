@@ -6,43 +6,43 @@
 def select_subproject(selection)
   case selection
   when '1'
-    id1 = '01'
+    $id1 = '1'
   when '2'
-    id1 = '02'
+    $id1 = '2'
   when '3'
-    id1 = '03'
+    $id1 = '3'
   when '4'
-    id1 = '04'
+    $id1 = '4'
   when '5'
-    id1 = '05'
+    $id1 = '5'
   when '6'
-    id1 = '06'
+    $id1 = '6'
   when '7'
-    id1 = '07'
+    $id1 = '7'
   when '8'
-    id1 = '08'
+    $id1 = '8'
   when '9'
-    id1 = '09'
+    $id1 = '9'
   when '10'
-    id1 = '10'
+    $id1 = '10'
   else
-    id1 = false
+    $id1 = false
   end
 end
 
-count1 = 101
-count2 = 999
+$count1 = 101
+$count2 = 999
 # The Function for position selection
 def select_position(selection)
   # Switch statement converted to if-else statement and counter worked
     if selection == '1' then
-      id2 = count1
-      count1 += 1
+      $id2 = $count1
+      $count1 += 1
     elsif selection == '2' then
-      id2 = count2
-      count2 -= 1
+      $id2 = $count2
+      $count2 -= 1
     else
-      id2 = false
+      $id2 = false
     end
 end
 # The Funcion for slection checking
@@ -50,9 +50,9 @@ def check_selection(id_a,id_b)
   # check system for wrong choices
   if ( id_a == false || id_b == false ) then
     puts "Your choice is wrong!"
-    id = 'No!'
+    $id = 'No!'
   else
-    id = id_a + id_b.to_s
+    $id = id_a + id_b.to_s
   end
 end
 
@@ -73,11 +73,11 @@ while 1 do
   selection2 = gets.chomp
 
   select_position(selection2)
-  check_selection(id1,id2)
+  check_selection($id1,$id2)
 
-  puts "Your ID: #{id}"
+  puts "Your ID: #{$id}"
 
-  if id != 'No!' then   # if choices are true , continue; else back to top
+  if $id != 'No!' then   # if choices are true , continue; else back to top
     #Did or will it continue or end of the cycle that determines the code block
     puts "Do you want to add a new one?(Y/N)"
     selection3 = gets.chomp
@@ -98,18 +98,27 @@ while 1 do
       selection2 = gets.chomp
 
       select_position(selection2)
-      check_selection(id1,id2)
+      check_selection($id1,$id2)
 
-      puts "Your ID: #{id}"
+      puts "Your ID: #{$id}"
     elsif (selection3 == 'N' || selection3 == 'n')
       break
     else
       puts "Your choice is wrong!"
     end
   end
-
-  puts "Do you want to add a new one?(Y/N)"
-  selection3 = gets.chomp
+# The user enters an incorrect character, it warns
+  while(1) do
+    puts "Do you want to add a new one?(Y/N)"
+    selection3 = gets.chomp
+    if (selection3 == 'N' || selection3 == 'n')
+      break
+    elsif (selection3 == 'Y' || selection3 == 'y')
+      break
+    else
+      puts "Your choice is wrong!"
+    end
+  end
   if (selection3 == 'N' || selection3 == 'n')
     break
   end
