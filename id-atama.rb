@@ -3,7 +3,7 @@
 
 # Show subproject of TARLA
 require 'mysql2'
-
+#  The function takes subprojects from the database and shows them
 def show_subproject
   puts "Please select your subproject: "
   begin
@@ -48,14 +48,25 @@ def show_position
   puts "Are you employee or intern?"
   print " 1-Employee\n 2-Intern\n"
 end
-$count1 = 100
-$count2 = 1000
+#$count1 = 100
+#$count2 = 1000
+# The function takes assigned last id and shows them for now
+def take_last_id(last_id)
+  begin
+    con = Mysql2::Client.new(:host => 'tarla.org.tr',:username => 'generator_id', :password => '!hotbut_bsk', :database => 'id_generator')
+    sm = con.query"SELECT value FROM id_generator.custom_values WHERE custom_field_id = 1 AND value>(#{last_id}*1000) AND value<((#{last_id}+1)*1000)"
+    sm.each do |row|
+      puts row ['value']
+    end
+  end
+#  puts "son id #{last_id}"
+end
 # Select position
 def select_position(selection)
   if selection == '1' then
-    $count1 += 1
+#    $count1 += 1
   elsif selection == '2' then
-    $count2 -= 1
+#    $count2 -= 1
   else
     return false
   end
@@ -86,6 +97,7 @@ while 1 do
   selection1 = gets.chomp
   id1 = select_subproject(selection1) # id1 => The first two digits of ID
   #puts "id1: #{id1}"
+  take_last_id(selection1)
   show_position
   selection2 = gets.chomp
   id2 = select_position(selection2) # id2 => The last three digits of ID
