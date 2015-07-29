@@ -2,13 +2,17 @@
 # Modification : Added Modules
 
 # Show subproject of TARLA
+require 'mysql2'
+
 def show_subproject
   puts "Please select your subproject: "
-  subprojects = ['Management','Beam Physics','Control','Electric','Electronics','IT','Mechanical Systems','RF','Vacuum','Radiation Safety']
-  i = 1
-  subprojects.each do |value|
-    puts "#{i}- #{value}"
-    i += 1
+  begin
+      con = Mysql2::Client.new(:host => 'tarla.org.tr',:username => 'generator_id', :password => '!hotbut_bsk', :database => 'id_generator')
+      rs = con.query"SELECT *FROM projects WHERE parent_id = 1 ORDER BY name"
+      rs.each do |row|
+        puts row ['name']
+      end
+          con.close
   end
 end
 # Select subpojects
@@ -38,6 +42,7 @@ def select_subproject(selection)
     false
   end
 end
+
 # Show position at TARLA
 def show_position
   puts "Are you employee or intern?"
