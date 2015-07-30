@@ -48,35 +48,41 @@ def show_position
   puts "Are you employee or intern?"
   print " 1-Employee\n 2-Intern\n"
 end
-#$count1 = 100
-#$count2 = 1000
-# The function takes assigned last id and shows them for now
-def take_last_id(last_id)
+# The function takes assigned last id and assigned new id
+def select_position(last_id,selection)
+  count1 = (last_id.to_i*1000) + 101
+  count2 = (last_id.to_i*1000) + 999
   begin
-    con = Mysql2::Client.new(:host => 'tarla.org.tr',:username => 'generator_id', :password => '!hotbut_bsk', :database => 'id_generator')
-    sm = con.query"SELECT value FROM id_generator.custom_values WHERE custom_field_id = 1 AND value>(#{last_id}*1000) AND value<((#{last_id}+1)*1000)"
-    sm.each do |row|
-      puts row ['value']
+    if selection == '1' then
+      con = Mysql2::Client.new(:host => 'tarla.org.tr',:username => 'generator_id', :password => '!hotbut_bsk', :database => 'id_generator')
+      sm = con.query"SELECT value FROM id_generator.custom_values WHERE custom_field_id = 1 AND value>(#{last_id}*1000) AND value<((#{last_id}+1)*1000) ORDER BY value ASC"
+        sm.each do |row|
+          if row ['value'].to_i == count1 then
+            count1 += 1
+          end
+        end
+      puts "Your ID:  ",count1.to_s
+    #    $count1 += 1
+    elsif selection == '2' then
+      con = Mysql2::Client.new(:host => 'tarla.org.tr',:username => 'generator_id', :password => '!hotbut_bsk', :database => 'id_generator')
+      sm = con.query"SELECT value FROM id_generator.custom_values WHERE custom_field_id = 1 AND value>(#{last_id}*1000) AND value<((#{last_id}+1)*1000) ORDER BY value DESC"
+        sm.each do |row|
+          if row ['value'].to_i == count2 then
+            count2 -= 1
+          end
+        end
+      puts "Your ID:  ",count2.to_s
+  #    $count2 -= 1
+    else
+      return false
     end
   end
 #  puts "son id #{last_id}"
-end
-# Select position
-def select_position(selection)
-  if selection == '1' then
-#    $count1 += 1
-  elsif selection == '2' then
-#    $count2 -= 1
-  else
-    return false
-  end
 end
 # selection control
 def check_selection(id_a, id_b)
   if ( id_a == false || id_b == false ) then
     puts "Your choice is wrong! Your ID: No!"
-  else
-    puts "Your ID:  ",id_a + id_b.to_s
   end
 end
 # Asks whether to continue
@@ -97,10 +103,11 @@ while 1 do
   selection1 = gets.chomp
   id1 = select_subproject(selection1) # id1 => The first two digits of ID
   #puts "id1: #{id1}"
-  take_last_id(selection1)
+
   show_position
   selection2 = gets.chomp
-  id2 = select_position(selection2) # id2 => The last three digits of ID
+  id2 = select_position(selection1,selection2)
+#  id2 = select_position(selection2) # id2 => The last three digits of ID
   #puts "id2: #{id2}"
   check_selection(id1 ,id2)
 
